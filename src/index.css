@@ -8,35 +8,48 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Cosmic Theme Colors */
+    --background: 241 38% 8%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 241 38% 12%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 241 38% 12%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 158 76% 56%;
+    --primary-foreground: 241 38% 8%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 271 81% 56%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 241 38% 15%;
+    --muted-foreground: 217 32% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 192 76% 56%;
+    --accent-foreground: 241 38% 8%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 241 38% 18%;
+    --input: 241 38% 18%;
+    --ring: 158 76% 56%;
 
-    --radius: 0.5rem;
+    /* Cosmic Gradients */
+    --gradient-cosmic: linear-gradient(135deg, hsl(241 38% 8%) 0%, hsl(271 81% 12%) 100%);
+    --gradient-glow: linear-gradient(135deg, hsl(158 76% 56%) 0%, hsl(192 76% 56%) 50%, hsl(271 81% 56%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(241 38% 12% / 0.8) 0%, hsl(271 81% 12% / 0.6) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(241 38% 20% / 0.2) 0%, hsl(271 81% 20% / 0.1) 100%);
+    
+    /* 3D Effects */
+    --shadow-cosmic: 0 25px 50px -12px hsl(158 76% 56% / 0.25);
+    --shadow-glow: 0 0 50px hsl(158 76% 56% / 0.3);
+    --shadow-float: 0 20px 40px -10px hsl(241 38% 4% / 0.5);
+    --shadow-glass: inset 0 1px 0 hsl(210 40% 98% / 0.1);
+
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +114,87 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background: var(--gradient-cosmic);
+    min-height: 100vh;
   }
+}
+
+@layer utilities {
+  /* 3D Glass Effects */
+  .glass-card {
+    background: var(--gradient-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-glass), var(--shadow-float);
+  }
+
+  .glow-effect {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .cosmic-glow {
+    background: var(--gradient-glow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Floating Animations */
+  .float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+  }
+
+  .float-medium {
+    animation: float-medium 4s ease-in-out infinite;
+  }
+
+  .float-fast {
+    animation: float-fast 3s ease-in-out infinite;
+  }
+
+  /* Particle Effects */
+  .cosmic-particles {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cosmic-particles::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, hsl(var(--primary)), transparent),
+      radial-gradient(2px 2px at 40px 70px, hsl(var(--accent)), transparent),
+      radial-gradient(1px 1px at 90px 40px, hsl(var(--secondary)), transparent),
+      radial-gradient(1px 1px at 130px 80px, hsl(var(--primary)), transparent),
+      radial-gradient(2px 2px at 160px 30px, hsl(var(--accent)), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: cosmic-drift 20s linear infinite;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(-2deg); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+@keyframes cosmic-drift {
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(200px); }
 }
